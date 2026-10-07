@@ -39,10 +39,18 @@ def t_static(var):
 
 
 def _push_ok(var, impulse, direction=1, payload=0.0):
+    """Shove the body; pass only if it recovers CLEANLY: never tips, legs never swing
+    beyond +-45 deg, and after 4 s it is back to a calm, normal stance."""
     sim = BoltSim(var, payload=payload)
     sim.run(1.0)
     sim.push([direction * impulse / 0.1, 0, 0], 0.1)
-    return sim.run(4.0) and sim.ctrl.out.state == 1
+    if not sim.run(4.0):
+        return False
+    after = [l for l in sim.log if l["t"] > 1.0]
+    worst_leg = max(abs(l["theta"]) for l in after)
+    end = sim.log[-1]
+    return bool(sim.ctrl.out.state == 1 and worst_leg < math.radians(45) and abs(end["pitch"]) < 0.1
+            and abs(end["theta"]) < 0.15 and abs(end["v"]) < 0.3)
 
 
 def t_push(var, payload=0.0):
@@ -73,7 +81,9 @@ def t_speed(var):
         ok = sim.run(7.5, policy=pol)
         vmax = max(l["v"] for l in sim.log)
         pmax = max(abs(l["pitch"]) for l in sim.log)
-        res[f"{v}"] = dict(ok=ok, v_reached=round(vmax, 2), pitch_max_deg=round(math.degrees(pmax), 1))
+        # pass = survived AND tracked the command (no runaway past the motors' speed limit)
+        res[f"{v}"] = dict(ok=bool(ok and vmax < 1.2 * v and math.degrees(pmax) < 10), v_reached=round(vmax, 2),
+                           pitch_max_deg=round(math.degrees(pmax), 1))
     top = max([float(k) for k, r in res.items() if r["ok"]] or [0])
     return dict(ok=res["2.0"]["ok"], top_speed_ok=top, runs=res)
 

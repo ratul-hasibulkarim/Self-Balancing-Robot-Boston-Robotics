@@ -3,15 +3,15 @@
     "shell_front": {
       "qty": 1,
       "material": "PETG",
-      "volume_cm3": 184.0,
-      "est_mass_g": 128.5,
+      "volume_cm3": 183.4,
+      "est_mass_g": 128.1,
       "bbox_mm": [
         105.0,
         240.0,
         155.0
       ],
       "watertight": true,
-      "print": "face down? no: back face on bed, 3 walls, 15% gyroid, tree supports",
+      "print": "split face on bed, 3 walls, 15% gyroid, tree supports (eye/camera holes)",
       "print_bbox_mm": [
         155.0,
         240.0,
@@ -21,8 +21,8 @@
     "shell_rear": {
       "qty": 1,
       "material": "PETG",
-      "volume_cm3": 178.4,
-      "est_mass_g": 124.6,
+      "volume_cm3": 177.8,
+      "est_mass_g": 124.2,
       "bbox_mm": [
         105.0,
         240.0,
@@ -75,11 +75,11 @@
     "side_plate_L": {
       "qty": 1,
       "material": "PA-CF",
-      "volume_cm3": 146.0,
-      "est_mass_g": 117.5,
+      "volume_cm3": 147.7,
+      "est_mass_g": 118.9,
       "bbox_mm": [
         170.0,
-        8.0,
+        25.0,
         150.0
       ],
       "watertight": true,
@@ -87,17 +87,17 @@
       "print_bbox_mm": [
         170.0,
         150.0,
-        8.0
+        25.0
       ]
     },
     "side_plate_R": {
       "qty": 1,
       "material": "PA-CF",
-      "volume_cm3": 146.0,
-      "est_mass_g": 117.5,
+      "volume_cm3": 147.7,
+      "est_mass_g": 118.9,
       "bbox_mm": [
         170.0,
-        8.0,
+        25.0,
         150.0
       ],
       "watertight": true,
@@ -105,7 +105,7 @@
       "print_bbox_mm": [
         170.0,
         150.0,
-        8.0
+        25.0
       ]
     },
     "floor_plate": {
@@ -201,8 +201,8 @@
     "electronics_sled": {
       "qty": 1,
       "material": "PETG-CF",
-      "volume_cm3": 65.9,
-      "est_mass_g": 55.7,
+      "volume_cm3": 66.0,
+      "est_mass_g": 55.8,
       "bbox_mm": [
         16.0,
         122.0,
@@ -335,7 +335,7 @@
         10.0
       ],
       "watertight": true,
-      "print": "flat, 8 walls, 50% gyroid",
+      "print": "flat, DIAGONAL on a 256 mm bed, 8 walls, 50% gyroid",
       "print_bbox_mm": [
         286.0,
         44.0,
@@ -353,7 +353,7 @@
         22.0
       ],
       "watertight": true,
-      "print": "flat, 8 walls, 50% gyroid",
+      "print": "flat (boss down, supports), DIAGONAL on a 256 mm bed, 8 walls, 50%",
       "print_bbox_mm": [
         298.0,
         68.0,
@@ -398,11 +398,11 @@
     }
   },
   "summary": {
-    "printed_total_g": 2458.0,
-    "body_prints_g": 1392.0,
+    "printed_total_g": 2460.0,
+    "body_prints_g": 1394.0,
     "body_prints_com_m": [
       -0.0019,
-      0.0,
+      -0.0,
       0.0323
     ],
     "per_leg_prints_g": 236.0,

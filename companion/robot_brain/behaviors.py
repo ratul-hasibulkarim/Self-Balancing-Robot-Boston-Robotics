@@ -26,6 +26,7 @@ from .link import Command, Telemetry
 from .navigation.planner import LocalNavigator, OccupancyGrid, RoadGraph, pure_pursuit
 from .perception.line_follower import LineFollower
 from .perception.obstacles import SONAR_ANGLES, SONAR_ORDER, ObstacleTracker
+from .perception.step_detector import StepDetector
 
 EXPR = {"normal": 0, "happy": 1, "blink": 2, "angry": 3, "sleepy": 4, "alert": 5, "lost": 6, "love": 7}
 
@@ -80,6 +81,7 @@ class Brain:
         self.grid = OccupancyGrid()
         self.nav = LocalNavigator(self.grid)
         self.line = LineFollower(self.cfg.line_color)
+        self.step_det = StepDetector()
         self.drive_v = 0.0
         self.drive_w = 0.0
         self.last_drive_t = -1e9
@@ -473,26 +475,71 @@ class Brain:
         """Jump UP onto a step / curb in front."""
         yield from self._approach_and_jump(height, speed, mode=0)
 
-    def _approach_and_jump(self, height, speed, mode):
-        # back off to get ~1 m of run-up if we are too close
-        while self.view.ranges["f"] < 0.9:
-            yield -0.3, 0.0
-        for _ in range(10):
+    def _measure_edge(self, height, n=5):
+        """Stand still and measure the wheel-to-edge distance from n fresh camera frames
+        (median).  Yields while measuring; result in self._edge_d (None if not seen)."""
+        vals, t0 = [], self.t
+        last = None
+        while len(vals) < n and self.t - t0 < 2.0:
+            img = self.io.frame("front")
+            if img is not None and img is not last:
+                last = img
+                tel = self.io.telemetry()
+                est = self.step_det.estimate(img, 0.5 * (tel.L[0] + tel.L[1]), body_pitch=tel.pitch, step_height=height)
+                if est.found:
+                    vals.append(est.wheel_to_edge)
             yield 0.0, 0.0
-        # run up until the sonar says ~0.85 m to the face of the obstacle, then request the jump
+        vals.sort()
+        ok = len(vals) >= 3 and vals[-1] - vals[0] < 0.05
+        self._edge_d = vals[len(vals) // 2] if ok else None
+
+    def _approach_and_jump(self, height, speed, mode, runup=1.6, request_at=0.9):
+        """1) locate the edge with the camera: stop-and-measure, creeping 10 cm at a time,
+           until it is 0.5-0.75 m away (where the estimate is accurate to ~2 cm),
+        2) back up to `runup` metres by odometry, 3) run up to speed and hand the remaining
+           distance to the controller ~0.9 m before the edge; it times the take-off itself."""
+        d = None
+        crept = 0.0
+        for _ in range(12):                                   # 1) locate (creeps at most ~0.6 m)
+            for _ in range(6):
+                yield 0.0, 0.0                                # let it settle
+            yield from self._measure_edge(height)
+            d = self._edge_d
+            if d is not None and 0.5 <= d <= 0.75:
+                break
+            if crept > 0.6:
+                break
+            s0 = self.io.telemetry().s
+            if d is None:
+                step = 0.15                                   # nothing reliable yet: move closer
+            elif d < 0.5:
+                step = -0.15                                  # too close: back off
+            else:
+                step = min(0.6, max(0.08, d - 0.65))          # seen far away: close in to ~0.65 m
+            while abs(self.io.telemetry().s - s0) < abs(step):
+                yield (0.25 if step > 0 else -0.25), 0.0
+            crept += max(step, 0.0)
+        if d is None or not 0.5 <= d <= 0.75:
+            self._alert("step not found: place BOLT 0.5-0.8 m in front of it, facing it, and retry")
+            return
+        s_loc = self.io.telemetry().s
+        d_now = lambda: d - (self.io.telemetry().s - s_loc)     # noqa: E731
         t0 = self.t
-        while self.view.ranges["f"] > 0.85 and self.t - t0 < 6:
+        while d_now() < runup - 0.03 and self.t - t0 < 8:       # 2) back up for the run-up
+            yield -0.35, 0.0
+        for _ in range(15):
+            yield 0.0, 0.0
+        t0 = self.t
+        while d_now() > request_at and self.t - t0 < 4:          # 3) run up to speed
             yield speed, 0.0
-        d_face = self.view.ranges["f"]
-        # sonar is on the body front (x = +0.105 m) -> distance from the wheel axle to the edge
         c = self.cmd
-        c.jump_height, c.jump_mode, c.jump_dist = height, mode, max(0.0, d_face + 0.105)
+        c.jump_height, c.jump_mode, c.jump_dist = height, mode, max(0.0, d_now())
         c.jump_seq = (c.jump_seq + 1) & 0xFFFF
         yield speed, 0.0
         yield from self._wait_state(("CROUCH",), 0.3)
         t0 = self.t
         landed = False
-        while self.t - t0 < 4:
+        while self.t - t0 < 5:
             st = self.io.telemetry().state_name
             landed = landed or st == "LAND"
             if st == "BALANCE" and self.t - t0 > 0.2:
@@ -500,6 +547,8 @@ class Brain:
             yield (0.5 if landed else speed), 0.0
         if not landed:
             self._alert("jump aborted (too close / too fast)")
+        else:
+            self.status = "jump done"
 
     def _act_stairs(self, rise=0.15, tread=None, steps=3, speed=0.8, **kw):
         """Climb a short flight: run-up -> jump -> brake -> reverse to the edge -> crouched run-up -> ...

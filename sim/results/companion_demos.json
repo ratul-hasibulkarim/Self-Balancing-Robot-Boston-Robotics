@@ -1,0 +1,59 @@
+{
+ "line_day": {
+  "dark": false,
+  "duration": 40.0,
+  "distance_m": 26.5,
+  "mean_err_m": 0.026,
+  "max_err_m": 0.209,
+  "final_mode": "LINE",
+  "status": "mode LINE",
+  "headlight_on": false
+ },
+ "line_dark": {
+  "dark": true,
+  "duration": 25,
+  "distance_m": 16.5,
+  "mean_err_m": 0.026,
+  "max_err_m": 0.209,
+  "final_mode": "LINE",
+  "status": "mode LINE",
+  "headlight_on": true
+ },
+ "obstacles": {
+  "detour": {
+   "reached_goal": true,
+   "halted": false,
+   "status": "arrived",
+   "final_mode": "HOLD",
+   "time_s": 44.9,
+   "x": 7.84,
+   "y": 0.26
+  },
+  "boxed_in": {
+   "reached_goal": false,
+   "halted": true,
+   "status": "HALT: no alternative path",
+   "final_mode": "HOLD",
+   "time_s": 44.9,
+   "x": 1.08,
+   "y": -0.19
+  }
+ },
+ "mission": {
+  "mission_items": 4,
+  "completed": true,
+  "final_status": "mission complete",
+  "time_s": 240.0,
+  "end_xy": [
+   -5.4,
+   29.6
+  ],
+  "gcs_saw_position": true,
+  "log": [
+   "GCS: vehicle found, uploading mission",
+   "GCS: mission accepted -> ARM + MISSION_START",
+   "VEHICLE: BOLT: mission with 4 items received",
+   "VEHICLE: BOLT: mission complete"
+  ]
+ }
+}

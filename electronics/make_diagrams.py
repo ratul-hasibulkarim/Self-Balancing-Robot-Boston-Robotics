@@ -111,7 +111,7 @@ def signals():
         wire(ax, [(5.7, y - 0.9), (6.3, y - 0.9)], C["can"])
         wire(ax, [(10.2, y), (11.0 + 0.25 * i, y), (11.0 + 0.25 * i, 16.5 - i * 0.3), (12.0, 16.5 - i * 0.3)], C["can"])
     # IMU
-    box(ax, 6.3, 7.4, 3.6, 2.4, "ICM-42688-P", ["IMU on the sled,", "on rubber grommets", "SPI 10 MHz"], fc="#e8f1ff", fs=8)
+    box(ax, 6.3, 7.4, 3.6, 2.4, "ICM-42688-P", ["HARD-mounted on the", "Teensy carrier (no", "rubber!) SPI 10 MHz"], fc="#e8f1ff", fs=8)
     wire(ax, [(9.9, 8.6), (12.0, 8.6)], C["spi"], "SPI")
     # sonar
     box(ax, 0.3, 7.0, 5.2, 3.6, "4x RCWL-1601 sonar", ["3.3 V-compatible HC-SR04", "FL/F/FR in the face,", "R in the rear shell", "VCC 5 V (buck #2)", "ECHO is 3.3 V: OK"], fc="#efffe9", fs=8)

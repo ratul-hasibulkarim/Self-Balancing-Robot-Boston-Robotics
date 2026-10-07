@@ -7,6 +7,9 @@ namespace bolt {
 
 namespace {
 constexpr float G = 9.81f;
+#ifndef JUMP_EDGE_MARGIN
+#define JUMP_EDGE_MARGIN 0.05f   // extra take-off distance before a step edge [m]
+#endif
 inline float clampf(float x, float lo, float hi) { return x < lo ? lo : (x > hi ? hi : x); }
 inline float sq(float x) { return x * x; }
 inline float approach(float x, float target, float step) {
@@ -230,7 +233,7 @@ void Controller::step(const Inputs& in, const Command& cmd, Outputs& out) {
           const float remaining = jump_edge_ - (s_ - s_jump0_);
           const float t_thrust = 1.4f * (cfg_.L_takeoff - cfg_.L_crouch) / fmaxf(jump_v_, 0.5f);
           const float t_clear = 0.05f + 0.35f * jump_h_;
-          const float d_needed = fmaxf(ds, 0.f) * (t_thrust + t_clear) + cfg_.wheel_radius + 0.05f;
+          const float d_needed = fmaxf(ds, 0.f) * (t_thrust + t_clear) + cfg_.wheel_radius + JUMP_EDGE_MARGIN;
           const bool low_enough = L < cfg_.L_crouch + 0.03f;
           fire = (crouched || low_enough) && remaining <= d_needed;
           // too close to make it (or overshot): abort instead of hitting the riser

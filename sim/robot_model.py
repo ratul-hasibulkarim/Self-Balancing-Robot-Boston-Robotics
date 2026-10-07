@@ -310,7 +310,7 @@ def build_mjcf(variant="V3", payload=0.0, terrain=None, visuals=True, start_L=No
           <headlight ambient="{amb}" diffuse="{dif}"/></visual>
   <asset>
     <texture name="grid" type="2d" builtin="checker" rgb1="0.82 0.84 0.86" rgb2="0.74 0.76 0.78" width="512" height="512"/>
-    <material name="grid" texture="grid" texrepeat="40 40" reflectance="0.05"/>
+    <material name="grid" texture="grid" texrepeat="40 40" reflectance="0.0"/>
     <material name="ramp" rgba="0.55 0.62 0.68 1"/>
     <material name="glow" emission="1"/>
     <texture name="sky" type="skybox" builtin="gradient" rgb1="{'0.02 0.02 0.05' if dark else '0.6 0.75 0.95'}" rgb2="{'0.0 0.0 0.02' if dark else '0.95 0.97 1'}" width="256" height="256"/>

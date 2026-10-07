@@ -162,6 +162,8 @@ def shell_upper():
     shell = outer - inner
     shell = shell - box(-200, 200, -200, 200, -200, SPLIT_Z)         # keep upper part
     shell = shell - hip_cutouts()
+    for (px, pz) in end_stop_points():                  # clearance for the end-stop pegs
+        shell = shell - cyl(5.5, 2 * BY + 40, "y").translate([px, 0, pz])
     # roof openings: payload bay + electronics cartridge
     shell = shell - box(BAY["x0"], BAY["x1"], BAY["y0"], BAY["y1"], 100, 300)
     shell = shell - box(SLED["x0"], SLED["x1"], SLED["y0"], SLED["y1"], 100, 300)
@@ -234,6 +236,20 @@ def belly_pan():
     return pan
 
 
+def end_stop_points():
+    """Where the thighs rest when the legs are folded to the calibration pose
+    (L = L_min - 5 mm, theta = 0) -> firmware CAL_PHI1 / CAL_PHI4."""
+    p1, p4 = kinematics.inverse(P["L_min"] - 0.005, 0.0, P["thigh"], P["shin"], P["hip_spacing"])
+    pts = []
+    along = 40.0
+    half = 26.0 - (26.0 - 13.0) / L1 * along          # half-width of the thigh outline there
+    for (hx, phi, ccw) in ((L5 / 2, p1, True), (-L5 / 2, p4, False)):
+        ux, uz = math.cos(phi), math.sin(phi)
+        nx, nz = (-uz, ux) if ccw else (uz, -ux)       # side the thigh moves towards when folding
+        pts.append((hx + along * ux + (half + 4.0) * nx, along * uz + (half + 4.0) * nz))
+    return pts
+
+
 def side_plate(side=1):
     """Structural side plate (PETG-CF / PA-CF, 8 mm). Carries both hip motors."""
     y0 = PLATE_Y0 if side > 0 else -PLATE_Y0 - PLATE_T
@@ -247,6 +263,10 @@ def side_plate(side=1):
     for x in (-62, 62):
         plate = plate - Manifold.batch_hull([cyl(7, 40, "y").translate([x, y0, 50]),
                                              cyl(7, 40, "y").translate([x, y0, -38])])
+    # calibration end-stop pegs (thighs rest on them when the legs are folded)
+    for (px, pz) in end_stop_points():
+        y_peg0 = y0 + PLATE_T if side > 0 else y0 - (THIGH_Y + 8 - PLATE_Y0 - PLATE_T)
+        plate = plate + cyl(4.0, THIGH_Y + 8 - PLATE_Y0 - PLATE_T, "y", center=False).translate([px, y_peg0, pz])
     # edge holes for floor / top frame (heat-set inserts go into the frame parts)
     for x in (-70, -25, 25, 70):
         plate = plate - cyl(M3_CLR / 2, 40, "y").translate([x, y0, BZ0 + 16])
@@ -350,9 +370,10 @@ def electronics_sled():
     for (y, z) in ((-32, 45), (32, 45), (-32, 97), (32, 97)):
         m = m + cyl(3.5, 6, "x", center=False).translate([x0 - 6, y, z])
         m = m - cyl(1.4, 30, "x").translate([x0, y, z])
-    # grommet holes for vibration isolation of the IMU board
+    # thumb-screw holes: the sled is CLAMPED rigidly to the top frame (the IMU sits on
+    # the Teensy carrier and must see the true body motion - no rubber here)
     for (y, z) in ((-12, 125), (12, 125)):
-        m = m - cyl(3, 30, "x").translate([x0, y, z])
+        m = m - cyl(1.7, 30, "x").translate([x0, y, z])
     # cable-tie slots
     for z in (70, 120):
         for y in (-50, 50):
@@ -499,7 +520,7 @@ MATERIAL = {      # g/cm^3 effective density (material density x fill factor)
 
 # part name -> (builder, qty, material, print note)
 PARTS = {
-    "shell_front":      (shell_front, 1, "PETG", "face down? no: back face on bed, 3 walls, 15% gyroid, tree supports"),
+    "shell_front":      (shell_front, 1, "PETG", "split face on bed, 3 walls, 15% gyroid, tree supports (eye/camera holes)"),
     "shell_rear":       (shell_rear, 1, "PETG", "split face on bed, 3 walls, 15% gyroid, tree supports"),
     "belly_pan":        (belly_pan, 1, "PETG-CF", "split face on bed, 4 walls, 25% gyroid"),
     "visor":            (visor, 1, "PETG-clear", "100% infill, 0.12 mm layers, glue into eye windows"),
@@ -517,8 +538,8 @@ PARTS = {
     "camera_mount":     (camera_mount, 2, "PETG", "flat"),
     "sonar_bracket":    (sonar_bracket, 4, "PETG", "flat"),
     "thigh":            (thigh, 4, "PA-CF", "flat, 100% infill or 8 walls (jump loads!)"),
-    "shin_front":       (lambda: shin(False), 2, "PA-CF", "flat, 8 walls, 50% gyroid"),
-    "shin_rear":        (lambda: shin(True), 2, "PA-CF", "flat, 8 walls, 50% gyroid"),
+    "shin_front":       (lambda: shin(False), 2, "PA-CF", "flat, DIAGONAL on a 256 mm bed, 8 walls, 50% gyroid"),
+    "shin_rear":        (lambda: shin(True), 2, "PA-CF", "flat (boss down, supports), DIAGONAL on a 256 mm bed, 8 walls, 50%"),
     "wheel_rim":        (wheel_rim, 2, "PETG-CF", "flat, 6 walls, 40%"),
     "tyre":             (tyre, 2, "TPU", "TPU 95A (85A for grip), 4 walls, 20% gyroid"),
 }

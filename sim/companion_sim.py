@@ -169,10 +169,10 @@ def demo_line(dark=False, duration=40.0, gif=True):
              title=f"Line following ({'dark, headlight' if dark else 'daylight'}) - mean error {res['mean_err_m']*100:.1f} cm")
     if gif and frames:
         from simulator import save_gif
-        save_gif(frames[::2], os.path.join(OUT, f"line_{'dark' if dark else 'day'}.gif"), fps=10, scale=0.7)
+        save_gif(frames[::2], os.path.join(ROOT, "docs", "images", f"line_{'dark' if dark else 'day'}.gif"), fps=10, scale=0.6)
         cam = io.frame("front")
         import cv2
-        cv2.imwrite(os.path.join(OUT, f"line_cam_{'dark' if dark else 'day'}.png"), cam)
+        cv2.imwrite(os.path.join(ROOT, "docs", "images", f"line_cam_{'dark' if dark else 'day'}.png"), cam)
     return res
 
 
