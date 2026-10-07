@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+sim/build/*.so
+sim/build/*.tmp
+sim/build/hfield_*.png
+sim/build/line_*.png
+.pio/
+firmware/.pio/
+*.elf

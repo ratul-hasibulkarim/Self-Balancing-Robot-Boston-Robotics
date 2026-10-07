@@ -1,0 +1,18 @@
+# BOLT companion configuration (Raspberry Pi 5)
+teensy_port: /dev/ttyACM0        # Teensy 4.1 over USB
+gps_port: /dev/ttyAMA2           # u-blox M10 puck on UART2 (GPIO4/5) - enable dtoverlay=uart2-pi5
+app_port: 8080                   # phone app: http://bolt.local:8080
+road_graph: maps/roads.geojson   # optional: OSM road lines for shortest-path routing (see docs)
+mavlink:
+  enabled: true
+  # Mission Planner on your laptop listens on UDP 14550. Use its IP, or broadcast:
+  url: udpout:255.255.255.255:14550
+settings:
+  cruise_speed: 1.2              # m/s on missions
+  line_speed: 0.8                # m/s line following
+  line_color: red
+  height: 0.22                   # standing leg length (m)
+  crawl_height: 0.135
+  wp_radius: 1.0                 # m, waypoint reached
+  auto_lights: true              # headlight + IR when the camera sees darkness
+  step_tread_default: 0.6

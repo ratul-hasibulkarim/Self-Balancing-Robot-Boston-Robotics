@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#14151f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>BOLT Controller</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="brand"><span id="conn" class="dot off" title="link"></span><b>BOLT</b></div>
+    <div class="pills">
+      <span class="pill" id="state">OFF</span>
+      <span class="pill" id="mode">IDLE</span>
+      <span class="pill" id="batt">-- V</span>
+    </div>
+    <button id="estop" class="estop" aria-label="Emergency stop">STOP</button>
+  </header>
+
+  <main>
+    <section class="view">
+      <img id="video" alt="front camera" src="">
+      <canvas id="hud" width="640" height="360"></canvas>
+      <div class="camsel">
+        <button data-cam="front" class="on">Front</button><button data-cam="rear">Rear</button><button data-cam="off">Off</button>
+      </div>
+      <div id="status" class="status">connecting...</div>
+    </section>
+
+    <nav class="tabs">
+      <button data-tab="drive" class="on">Drive</button>
+      <button data-tab="auto">Auto</button>
+      <button data-tab="mission">Mission</button>
+      <button data-tab="setup">Setup</button>
+    </nav>
+
+    <!-- DRIVE -->
+    <section class="tab" id="tab-drive">
+      <div class="drive">
+        <div class="stickwrap">
+          <canvas id="stick" width="220" height="220"></canvas>
+          <label class="mini">max speed <output id="vmaxv">1.2</output> m/s
+            <input id="vmax" type="range" min="0.2" max="2.4" step="0.1" value="1.2"></label>
+        </div>
+        <div class="actions">
+          <button class="act big" data-act="jump">Jump</button>
+          <button class="act" data-act="hop">Hop over</button>
+          <button class="act" data-act="step_up">Step up</button>
+          <button class="act" data-act="stairs">Stairs</button>
+          <button class="act" data-act="dodge_left">&#9664; Dodge</button>
+          <button class="act" data-act="dodge_right">Dodge &#9654;</button>
+          <button class="act toggle" id="crawl">Crawl</button>
+          <button class="act" id="standsit" data-act="stand">Stand</button>
+        </div>
+      </div>
+      <div class="sliders">
+        <label>Height <output id="hv">0.22</output> m<input id="height" type="range" min="0.13" max="0.32" step="0.005" value="0.22"></label>
+        <label>Tilt (pitch) <output id="pv">0</output>&deg;<input id="pitch" type="range" min="-25" max="25" step="1" value="0"></label>
+        <label>Lean (roll) <output id="rv">0</output>&deg;<input id="roll" type="range" min="-17" max="17" step="1" value="0"></label>
+        <label>Jump / step height <output id="jv">0.12</output> m<input id="jumph" type="range" min="0.04" max="0.20" step="0.01" value="0.12"></label>
+        <button class="ghost" id="level">Level</button>
+      </div>
+    </section>
+
+    <!-- AUTO -->
+    <section class="tab hidden" id="tab-auto">
+      <div class="grid2">
+        <button class="mode" data-mode="MANUAL">Manual</button>
+        <button class="mode" data-mode="HOLD">Hold</button>
+        <button class="mode" data-mode="EXPLORE">Explore &amp; avoid</button>
+        <button class="mode" data-mode="RTL">Return home</button>
+      </div>
+      <h3>Follow a line</h3>
+      <div class="colors" id="colors">
+        <button data-color="red" style="--c:#e53935"></button>
+        <button data-color="orange" style="--c:#fb8c00"></button>
+        <button data-color="yellow" style="--c:#fdd835"></button>
+        <button data-color="green" style="--c:#43a047"></button>
+        <button data-color="blue" style="--c:#1e88e5"></button>
+        <button data-color="black" style="--c:#111"></button>
+        <button data-color="white" style="--c:#eee"></button>
+      </div>
+      <label>Line speed <output id="lsv">0.8</output> m/s<input id="lspeed" type="range" min="0.2" max="1.2" step="0.05" value="0.8"></label>
+      <button class="wide" id="linego">Start line following</button>
+      <div class="radar"><canvas id="radar" width="260" height="150"></canvas></div>
+    </section>
+
+    <!-- MISSION -->
+    <section class="tab hidden" id="tab-mission">
+      <p class="hint">Plan missions in <b>Mission Planner</b> (UDP 14550) or build a quick one here.
+        Routes between points use the shortest path over the road map (A*); blocked roads are re-routed,
+        and the robot halts if no alternative exists.</p>
+      <div class="row">
+        <button id="addhere">+ Current position</button>
+        <button id="addjump">+ Jump</button>
+        <button id="clearwp" class="ghost">Clear</button>
+      </div>
+      <div class="row"><input id="latlon" placeholder="lat, lon  (e.g. 23.7281, 90.3895)"><button id="addll">+ Add</button></div>
+      <ol id="wplist"></ol>
+      <canvas id="map" width="320" height="220"></canvas>
+      <div class="row">
+        <button class="wide go" id="missiongo">Start mission</button>
+        <button class="wide" data-mode="HOLD" id="missionpause">Pause</button>
+      </div>
+    </section>
+
+    <!-- SETUP -->
+    <section class="tab hidden" id="tab-setup">
+      <h3>Lights</h3>
+      <label class="check"><input type="checkbox" id="autolights" checked> Auto (headlight + IR in the dark)</label>
+      <label>Headlight<input id="headlight" type="range" min="0" max="255" value="0"></label>
+      <label>IR night light<input id="irlight" type="range" min="0" max="255" value="0"></label>
+      <h3>Eyes</h3>
+      <div class="grid4" id="eyes">
+        <button data-e="normal">&#128578;</button><button data-e="happy">&#128516;</button>
+        <button data-e="love">&#128525;</button><button data-e="angry">&#128544;</button>
+        <button data-e="sleepy">&#128564;</button><button data-e="alert">&#9888;</button>
+      </div>
+      <h3>Robot</h3>
+      <label>Robot address<input id="host" placeholder="auto (this page's host)"></label>
+      <div class="row"><button id="sit" class="ghost">Sit down (motors off)</button><button id="release" class="ghost">Release e-stop</button></div>
+      <p class="hint">Keyboard: W/S speed, A/D turn, Space jump, C crawl, X stop.</p>
+    </section>
+  </main>
+  <div id="toast" class="toast hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>

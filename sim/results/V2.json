@@ -1,0 +1,246 @@
+{
+ "static_balance": {
+  "ok": true,
+  "pitch_rms_deg": 0.016190196603577223,
+  "drift_m": 0.005316079559956138,
+  "runtime_s": 0.6
+ },
+ "push_recovery": {
+  "ok": true,
+  "max_impulse_Ns": {
+   "fwd": 12.7,
+   "back": 9.7
+  },
+  "runtime_s": 6.0
+ },
+ "top_speed": {
+  "ok": true,
+  "top_speed_ok": 2.4,
+  "runs": {
+   "1.0": {
+    "ok": true,
+    "v_reached": 1.19,
+    "pitch_max_deg": 0.4
+   },
+   "2.0": {
+    "ok": true,
+    "v_reached": 3.09,
+    "pitch_max_deg": 21.1
+   },
+   "2.4": {
+    "ok": true,
+    "v_reached": 3.03,
+    "pitch_max_deg": 20.7
+   }
+  },
+  "runtime_s": 2.4
+ },
+ "turning": {
+  "ok": true,
+  "roll_max_deg": 0.1,
+  "runtime_s": 0.5
+ },
+ "incline": {
+  "ok": true,
+  "max_slope_deg": 30,
+  "runs": {
+   "10": {
+    "climb": true,
+    "hold": true
+   },
+   "15": {
+    "climb": true,
+    "hold": true
+   },
+   "20": {
+    "climb": true,
+    "hold": true
+   },
+   "25": {
+    "climb": true,
+    "hold": true
+   },
+   "30": {
+    "climb": true,
+    "hold": true
+   }
+  },
+  "runtime_s": 8.4
+ },
+ "side_slope": {
+  "ok": true,
+  "max_side_slope_leveled_deg": 16,
+  "runs": {
+   "8": {
+    "ok": true,
+    "body_roll_deg": 0.9
+   },
+   "12": {
+    "ok": true,
+    "body_roll_deg": 2.1
+   },
+   "16": {
+    "ok": true,
+    "body_roll_deg": 1.8
+   }
+  },
+  "runtime_s": 1.7
+ },
+ "rough_terrain": {
+  "ok": true,
+  "max_bump_amplitude_at_1p5ms": 0.08,
+  "runs": {
+   "0.05@0.8": true,
+   "0.05@1.5": true,
+   "0.08@0.8": true,
+   "0.08@1.5": true,
+   "0.11@0.8": true,
+   "0.11@1.5": false,
+   "0.14@0.8": false,
+   "0.14@1.5": false
+  },
+  "runtime_s": 12.1
+ },
+ "payload": {
+  "ok": true,
+  "max_payload_kg": 3.0,
+  "runs": {
+   "0.0": {
+    "drive": true,
+    "push8Ns": true
+   },
+   "1.0": {
+    "drive": true,
+    "push8Ns": true
+   },
+   "2.0": {
+    "drive": true,
+    "push8Ns": true
+   },
+   "3.0": {
+    "drive": true,
+    "push8Ns": true
+   }
+  },
+  "runtime_s": 4.2
+ },
+ "tilt_height": {
+  "ok": true,
+  "runs": {
+   "pitch -0.4": {
+    "ok": true,
+    "achieved_deg": -22.9
+   },
+   "pitch -0.2": {
+    "ok": true,
+    "achieved_deg": -11.5
+   },
+   "pitch +0.2": {
+    "ok": true,
+    "achieved_deg": 11.4
+   },
+   "pitch +0.4": {
+    "ok": true,
+    "achieved_deg": 22.8
+   },
+   "roll -0.25": {
+    "ok": true,
+    "achieved_deg": -14.8
+   },
+   "roll +0.25": {
+    "ok": true,
+    "achieved_deg": 14.8
+   },
+   "height min": {
+    "ok": true,
+    "hip_height_m": 0.179
+   },
+   "height max": {
+    "ok": true,
+    "hip_height_m": 0.349
+   }
+  },
+  "runtime_s": 3.4
+ },
+ "crawl": {
+  "ok": true,
+  "lowest_bar_passed_m": 0.4,
+  "runs": {
+   "0.5": true,
+   "0.45": true,
+   "0.42": true,
+   "0.4": true,
+   "0.38": false
+  },
+  "runtime_s": 4.0
+ },
+ "jump_flat": {
+  "ok": "True",
+  "max_wheel_clearance_m": 0.213,
+  "runs": {
+   "0.1": {
+    "ok": true,
+    "wheel_clearance_m": 0.164
+   },
+   "0.2": {
+    "ok": true,
+    "wheel_clearance_m": 0.212
+   },
+   "0.3": {
+    "ok": true,
+    "wheel_clearance_m": 0.213
+   }
+  },
+  "runtime_s": 1.0
+ },
+ "step_up": {
+  "ok": true,
+  "max_step_m": 0.2,
+  "success_rate": {
+   "0.08": 1.0,
+   "0.12": 1.0,
+   "0.16": 1.0,
+   "0.2": 1.0,
+   "0.22": 0.0
+  },
+  "runtime_s": 7.6
+ },
+ "stairs": {
+  "ok": false,
+  "min_tread_m": null,
+  "runs": {
+   "0.12x0.3": false,
+   "0.17x0.3": false,
+   "0.12x0.45": false,
+   "0.17x0.45": false,
+   "0.12x0.6": false,
+   "0.17x0.6": false
+  },
+  "runtime_s": 11.6
+ },
+ "obstacle_hop": {
+  "ok": true,
+  "max_obstacle_m": 0.14,
+  "runs": {
+   "0.06": true,
+   "0.1": false,
+   "0.14": true
+  },
+  "runtime_s": 1.4
+ },
+ "fall_recovery": {
+  "ok": false,
+  "experimental": true,
+  "runs": {
+   "front": {
+    "lying": true,
+    "recovered": false
+   },
+   "back": {
+    "lying": true,
+    "recovered": false
+   }
+  },
+  "runtime_s": 1.8
+ }
+}
