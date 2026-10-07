@@ -1,0 +1,411 @@
+{
+  "parts": {
+    "shell_front": {
+      "qty": 1,
+      "material": "PETG",
+      "volume_cm3": 183.4,
+      "est_mass_g": 128.1,
+      "bbox_mm": [
+        105.0,
+        240.0,
+        155.0
+      ],
+      "watertight": true,
+      "print": "split face on bed, 3 walls, 15% gyroid, tree supports (eye/camera holes)",
+      "print_bbox_mm": [
+        155.0,
+        240.0,
+        105.0
+      ]
+    },
+    "shell_rear": {
+      "qty": 1,
+      "material": "PETG",
+      "volume_cm3": 177.8,
+      "est_mass_g": 124.2,
+      "bbox_mm": [
+        105.0,
+        240.0,
+        155.0
+      ],
+      "watertight": true,
+      "print": "split face on bed, 3 walls, 15% gyroid, tree supports",
+      "print_bbox_mm": [
+        155.0,
+        240.0,
+        105.0
+      ]
+    },
+    "belly_pan": {
+      "qty": 1,
+      "material": "PETG-CF",
+      "volume_cm3": 232.6,
+      "est_mass_g": 196.6,
+      "bbox_mm": [
+        210.0,
+        239.8,
+        75.0
+      ],
+      "watertight": true,
+      "print": "split face on bed, 4 walls, 25% gyroid",
+      "print_bbox_mm": [
+        210.0,
+        239.8,
+        75.0
+      ]
+    },
+    "visor": {
+      "qty": 1,
+      "material": "PETG-clear",
+      "volume_cm3": 11.2,
+      "est_mass_g": 14.3,
+      "bbox_mm": [
+        1.5,
+        150.0,
+        50.0
+      ],
+      "watertight": true,
+      "print": "100% infill, 0.12 mm layers, glue into eye windows",
+      "print_bbox_mm": [
+        50.0,
+        150.0,
+        1.5
+      ]
+    },
+    "side_plate_L": {
+      "qty": 1,
+      "material": "PA-CF",
+      "volume_cm3": 147.7,
+      "est_mass_g": 118.9,
+      "bbox_mm": [
+        170.0,
+        25.0,
+        150.0
+      ],
+      "watertight": true,
+      "print": "flat, 6 walls, 40% gyroid (structural)",
+      "print_bbox_mm": [
+        170.0,
+        150.0,
+        25.0
+      ]
+    },
+    "side_plate_R": {
+      "qty": 1,
+      "material": "PA-CF",
+      "volume_cm3": 147.7,
+      "est_mass_g": 118.9,
+      "bbox_mm": [
+        170.0,
+        25.0,
+        150.0
+      ],
+      "watertight": true,
+      "print": "flat, 6 walls, 40% gyroid (structural)",
+      "print_bbox_mm": [
+        170.0,
+        150.0,
+        25.0
+      ]
+    },
+    "floor_plate": {
+      "qty": 1,
+      "material": "PA-CF",
+      "volume_cm3": 211.2,
+      "est_mass_g": 170.1,
+      "bbox_mm": [
+        170.0,
+        216.0,
+        20.0
+      ],
+      "watertight": true,
+      "print": "flat, 5 walls, 40% gyroid",
+      "print_bbox_mm": [
+        170.0,
+        216.0,
+        20.0
+      ]
+    },
+    "top_frame": {
+      "qty": 1,
+      "material": "PA-CF",
+      "volume_cm3": 161.7,
+      "est_mass_g": 130.2,
+      "bbox_mm": [
+        170.0,
+        216.0,
+        46.0
+      ],
+      "watertight": true,
+      "print": "upside-down, 5 walls, 35% gyroid",
+      "print_bbox_mm": [
+        170.0,
+        216.0,
+        46.0
+      ]
+    },
+    "battery_tray": {
+      "qty": 1,
+      "material": "PETG",
+      "volume_cm3": 63.7,
+      "est_mass_g": 44.5,
+      "bbox_mm": [
+        178.0,
+        68.0,
+        48.0
+      ],
+      "watertight": true,
+      "print": "flat, 4 walls, 30%",
+      "print_bbox_mm": [
+        178.0,
+        68.0,
+        48.0
+      ]
+    },
+    "payload_bay": {
+      "qty": 1,
+      "material": "PETG",
+      "volume_cm3": 165.9,
+      "est_mass_g": 115.9,
+      "bbox_mm": [
+        132.0,
+        136.0,
+        118.0
+      ],
+      "watertight": true,
+      "print": "open side up, 3 walls, 20%",
+      "print_bbox_mm": [
+        132.0,
+        136.0,
+        118.0
+      ]
+    },
+    "payload_lid": {
+      "qty": 1,
+      "material": "PETG",
+      "volume_cm3": 55.8,
+      "est_mass_g": 39.0,
+      "bbox_mm": [
+        128.0,
+        132.0,
+        16.0
+      ],
+      "watertight": true,
+      "print": "outer face down on textured PEI",
+      "print_bbox_mm": [
+        128.0,
+        132.0,
+        16.0
+      ]
+    },
+    "electronics_sled": {
+      "qty": 1,
+      "material": "PETG-CF",
+      "volume_cm3": 66.0,
+      "est_mass_g": 55.8,
+      "bbox_mm": [
+        16.0,
+        122.0,
+        120.0
+      ],
+      "watertight": true,
+      "print": "flat on the Pi side, 4 walls, 30%",
+      "print_bbox_mm": [
+        120.0,
+        122.0,
+        16.0
+      ]
+    },
+    "electronics_cap": {
+      "qty": 1,
+      "material": "PETG",
+      "volume_cm3": 26.9,
+      "est_mass_g": 18.8,
+      "bbox_mm": [
+        52.0,
+        132.0,
+        36.0
+      ],
+      "watertight": true,
+      "print": "upright, supports under puck seat",
+      "print_bbox_mm": [
+        52.0,
+        132.0,
+        36.0
+      ]
+    },
+    "bumper_front": {
+      "qty": 1,
+      "material": "TPU",
+      "volume_cm3": 79.7,
+      "est_mass_g": 57.9,
+      "bbox_mm": [
+        57.0,
+        254.0,
+        40.0
+      ],
+      "watertight": true,
+      "print": "TPU 95A, 3 walls, 25% gyroid, slow 25 mm/s",
+      "print_bbox_mm": [
+        57.0,
+        254.0,
+        40.0
+      ]
+    },
+    "bumper_rear": {
+      "qty": 1,
+      "material": "TPU",
+      "volume_cm3": 83.2,
+      "est_mass_g": 60.4,
+      "bbox_mm": [
+        57.0,
+        254.0,
+        40.0
+      ],
+      "watertight": true,
+      "print": "TPU 95A, 3 walls, 25% gyroid",
+      "print_bbox_mm": [
+        57.0,
+        254.0,
+        40.0
+      ]
+    },
+    "camera_mount": {
+      "qty": 2,
+      "material": "PETG",
+      "volume_cm3": 5.6,
+      "est_mass_g": 3.9,
+      "bbox_mm": [
+        21.3,
+        32.0,
+        37.2
+      ],
+      "watertight": true,
+      "print": "flat",
+      "print_bbox_mm": [
+        37.2,
+        32.0,
+        21.3
+      ]
+    },
+    "sonar_bracket": {
+      "qty": 4,
+      "material": "PETG",
+      "volume_cm3": 4.1,
+      "est_mass_g": 2.9,
+      "bbox_mm": [
+        15.0,
+        48.0,
+        24.0
+      ],
+      "watertight": true,
+      "print": "flat",
+      "print_bbox_mm": [
+        24.0,
+        48.0,
+        15.0
+      ]
+    },
+    "thigh": {
+      "qty": 4,
+      "material": "PA-CF",
+      "volume_cm3": 56.3,
+      "est_mass_g": 45.3,
+      "bbox_mm": [
+        179.0,
+        52.0,
+        10.0
+      ],
+      "watertight": true,
+      "print": "flat, 100% infill or 8 walls (jump loads!)",
+      "print_bbox_mm": [
+        179.0,
+        52.0,
+        10.0
+      ]
+    },
+    "shin_front": {
+      "qty": 2,
+      "material": "PA-CF",
+      "volume_cm3": 53.5,
+      "est_mass_g": 43.0,
+      "bbox_mm": [
+        286.0,
+        44.0,
+        10.0
+      ],
+      "watertight": true,
+      "print": "flat, DIAGONAL on a 256 mm bed, 8 walls, 50% gyroid",
+      "print_bbox_mm": [
+        286.0,
+        44.0,
+        10.0
+      ]
+    },
+    "shin_rear": {
+      "qty": 2,
+      "material": "PA-CF",
+      "volume_cm3": 127.4,
+      "est_mass_g": 102.6,
+      "bbox_mm": [
+        298.0,
+        68.0,
+        22.0
+      ],
+      "watertight": true,
+      "print": "flat (boss down, supports), DIAGONAL on a 256 mm bed, 8 walls, 50%",
+      "print_bbox_mm": [
+        298.0,
+        68.0,
+        22.0
+      ]
+    },
+    "wheel_rim": {
+      "qty": 2,
+      "material": "PETG-CF",
+      "volume_cm3": 167.6,
+      "est_mass_g": 141.7,
+      "bbox_mm": [
+        126.0,
+        126.0,
+        36.0
+      ],
+      "watertight": true,
+      "print": "flat, 6 walls, 40%",
+      "print_bbox_mm": [
+        126.0,
+        126.0,
+        36.0
+      ]
+    },
+    "tyre": {
+      "qty": 2,
+      "material": "TPU",
+      "volume_cm3": 201.1,
+      "est_mass_g": 146.0,
+      "bbox_mm": [
+        150.0,
+        150.0,
+        40.0
+      ],
+      "watertight": true,
+      "print": "TPU 95A (85A for grip), 4 walls, 20% gyroid",
+      "print_bbox_mm": [
+        150.0,
+        150.0,
+        40.0
+      ]
+    }
+  },
+  "summary": {
+    "printed_total_g": 2460.0,
+    "body_prints_g": 1394.0,
+    "body_prints_com_m": [
+      -0.0019,
+      -0.0,
+      0.0323
+    ],
+    "per_leg_prints_g": 236.0,
+    "per_wheel_prints_g": 288.0
+  }
+}

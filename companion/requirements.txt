@@ -1,0 +1,7 @@
+numpy>=1.24
+opencv-python-headless>=4.8   # on the Pi prefer: sudo apt install python3-opencv
+pyserial>=3.5
+pymavlink>=2.4.40
+aiohttp>=3.9
+pyyaml>=6.0
+# picamera2 comes from apt on Raspberry Pi OS: sudo apt install python3-picamera2

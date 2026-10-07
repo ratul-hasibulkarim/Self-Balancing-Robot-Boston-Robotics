@@ -1,0 +1,15 @@
+[Unit]
+Description=BOLT robot brain (app server, navigation, MAVLink)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=bolt
+WorkingDirectory=/home/bolt/Self-Balancing-Robot-Boston-Robotics/companion
+ExecStart=/usr/bin/python3 -m robot_brain.main --config config.yaml
+Restart=always
+RestartSec=2
+Nice=-5
+
+[Install]
+WantedBy=multi-user.target

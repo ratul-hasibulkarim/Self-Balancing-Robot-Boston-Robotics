@@ -1,0 +1,10 @@
+{
+  "name": "BOLT Controller",
+  "short_name": "BOLT",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#14151f",
+  "theme_color": "#14151f",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
