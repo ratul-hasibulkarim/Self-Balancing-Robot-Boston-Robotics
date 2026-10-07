@@ -24,7 +24,7 @@ BOLT is a **wheel‑legged balancing robot** in the spirit of Boston Dynamics' *
 |---|---|
 | Balance on rough / inclined ground | Wheels balance (inverted pendulum); legs act as active suspension and keep the body level (roll compensation on side slopes, pitch on ramps). |
 | Run fast | Wheels are 5–10× more efficient and faster than walking legs. |
-| Jump steps / obstacles | Both hip motors of a leg push together → 150–300 N per leg → 22 cm wheel clearance in simulation. |
+| Jump steps / obstacles | Both hip motors of a leg push together → 80–165 N per leg (4–8× what it takes to hold the body) → 22 cm wheel clearance in simulation. |
 | Tilt / crawl | Leg length 0.13–0.35 m and leg angle are independent → body pitch ±23°, roll ±15°, low crawl stance. |
 
 A pure two‑wheeler can't jump or crawl; a quadruped is slow, heavy and complex. Two legs with wheels is the sweet spot.

@@ -8,6 +8,8 @@
 
 > Everything here is designed and **tested in simulation** (MuJoCo + the real firmware controller + the real Raspberry Pi code). It has not been built yet. Expect to re‑tune gains on hardware. Read the limits section before you buy motors.
 
+> **New to robotics?** Read the [beginner's guide](docs/guide/README.md). It covers how every part was designed, the physics, the linkages, how the simulations and design iterations were done, and how the electronics and code work.
+
 ## What's in this repository
 
 | Deliverable | Where | |
@@ -18,6 +20,7 @@
 | **4. Circuit diagrams and settings** | `electronics/*.svg/.png` · pin maps, motor/Pi/GPS/Mission Planner settings | [electronics & settings](docs/03_electronics_and_settings.md) |
 | **5. Controller app** | `app/` — installable phone app (PWA) served by the robot | [software guide §6.4](docs/06_software.md#64-controller-app-app) |
 | Design rationale, COM, requirement traceability | | [design overview](docs/01_design.md) · [bill of materials](docs/02_bom.md) |
+| **Full explanation for beginners** | physics, mechanism, CAD, simulation & iterations, electronics, code walkthrough | [docs/guide](docs/guide/README.md) |
 
 ## The robot in numbers (final design V3, simulation)
 
@@ -64,5 +67,5 @@ companion/   robot_brain/ (behaviors, perception, navigation, mission, app_serve
              config.yaml, tools/bolt_cli.py, systemd/, tests/
 app/         index.html, app.js, style.css, manifest + service worker (PWA)
 electronics/ make_diagrams.py -> power_distribution.*, signal_wiring.*
-docs/        01_design .. 06_software, images/
+docs/        01_design .. 06_software, images/, guide/ (beginner's guide, 8 chapters)
 ```
